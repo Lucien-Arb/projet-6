@@ -9,12 +9,15 @@ const morgan = require('morgan');
 const winston = require('./monitoring/config/winston');
 const helmet = require('helmet');
 
-mongoose.connect('mongodb+srv://User:boercomvet@cluster0.ikvrg.mongodb.net/Cluster0?retryWrites=true&w=majority',
+require('dotenv').config();
+const mdp = process.env.mdpMongoDb;
+
+mongoose.connect(`mongodb+srv://User:${mdp}@cluster0.ikvrg.mongodb.net/<dbname>?retryWrites=true&w=majority`,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
-
+  
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
